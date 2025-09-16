@@ -1,3 +1,3 @@
 class AppConfig {
-  static final String apiBaseUrl = 'http://192.168.0.110:8080/';
+  static final String apiBaseUrl = 'http://192.168.0.105:8080/';
 }

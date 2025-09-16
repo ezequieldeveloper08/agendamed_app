@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mediup/view/screens/doctor/widgets/doctor_card.dart';
+import 'package:mediup/domain/entities/professional_category.dart';
+import 'package:mediup/view/screens/doctor/widgets/list_doctors.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -9,26 +10,7 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-  final List<String> medicalSpecialties = [
-    "Todos",
-    "Cardiologista",
-    "Dentista",
-    "Nefrologista",
-    "Gastroenterologista",
-    "Pneumologista",
-    "Neurologista",
-    "Psiquiatra",
-    "Hepatologista",
-    "Dermatologista",
-    "Oftalmologista",
-    "Ortopedista",
-    "Pediatra",
-    "Endocrinologista",
-    "Ginecologista",
-    "Urologista",
-    "Otorrinolaringologista",
-  ];
-  String? selected = 'Todos';
+  int? selected = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -87,13 +69,13 @@ class _SearchScreenState extends State<SearchScreen> {
                         if (index == 0) SizedBox(width: 20),
                         ChoiceChip(
                           selectedColor: Colors.blueAccent,
-                          label: Text(medicalSpecialties[index]),
-                          selected: medicalSpecialties[index] == selected,
+                          label: Text(medicalSpecialties[index].name),
+                          selected: medicalSpecialties[index].id == selected,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(14),
                           ),
                           onSelected: (value) => setState(() {
-                            selected = medicalSpecialties[index];
+                            selected = medicalSpecialties[index].id;
                           }),
                         ),
                         if (index == (medicalSpecialties.length - 1))
@@ -106,15 +88,8 @@ class _SearchScreenState extends State<SearchScreen> {
                 ),
               ),
             ),
-            SliverPadding(
-              padding: const EdgeInsets.all(20),
-              sliver: SliverList.separated(
-                itemBuilder: (context, index) => DoctorCard(),
-                separatorBuilder: (context, index) =>
-                    const SizedBox(height: 16),
-                itemCount: 8,
-              ),
-            ),
+            SliverPadding(padding: const EdgeInsets.only(top: 24)),
+            ListDoctors(),
           ],
         ),
       ),

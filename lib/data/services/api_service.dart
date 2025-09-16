@@ -46,6 +46,14 @@ class ApiService {
     );
   }
 
+  void setToken(String token) {
+    _dio.options.headers['Authorization'] = 'Bearer $token';
+  }
+
+  void clearToken() {
+    _dio.options.headers.remove('Authorization');
+  }
+
   Future<Response> get(
     String endpoint, {
     Map<String, dynamic>? queryParams,

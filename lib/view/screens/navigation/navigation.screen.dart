@@ -4,6 +4,7 @@ import 'package:mediup/config/custom_colors.dart';
 import 'package:mediup/view/screens/appointments/appointments.screen.dart';
 import 'package:mediup/view/screens/home/home.screen.dart';
 import 'package:mediup/view/screens/messages/messages.screen.dart';
+import 'package:mediup/view/screens/profile/profile.screen.dart';
 
 class NavigationScreen extends StatefulWidget {
   const NavigationScreen({super.key});
@@ -19,7 +20,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
     HomeScreen(),
     AppointmentsScreen(),
     MessagesScreen(),
-    Center(child: Text("Profile", style: TextStyle(fontSize: 24))),
+    ProfileScreen(),
   ];
 
   void _onItemTapped(int index) {

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:mediup/domain/entities/professional.dart';
 import 'package:mediup/view/screens/doctor/doctor.screen.dart';
 
 class DoctorCard extends StatelessWidget {
-  const DoctorCard({super.key});
+  final Professional professional;
+  const DoctorCard({super.key, required this.professional});
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +44,7 @@ class DoctorCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Dr. Imran Syahir',
+                          professional.name,
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w700,

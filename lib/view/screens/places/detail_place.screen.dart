@@ -35,7 +35,7 @@ class _DetailPlaceScreenState extends State<DetailPlaceScreen> {
           ),
 
           /* SliverToBoxAdapter(child: SizedBox(height: 200, child: CustomMap())), */
-          ListDoctors(title: 'Médicos(as)', doctors: []),
+          ListDoctors(title: 'Médicos(as)'),
         ],
       ),
     );
