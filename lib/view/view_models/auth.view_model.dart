@@ -38,7 +38,13 @@ class AuthViewModel extends ChangeNotifier {
     try {
       var res = await repository.signin(data);
 
-      return res;
+      switch (res) {
+        case Ok():
+          user = res.value;
+          return res;
+        case Error():
+          return res;
+      }
     } catch (error) {
       return Result.error(error as ServerException);
     }

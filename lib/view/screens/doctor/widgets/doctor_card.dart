@@ -32,12 +32,19 @@ class DoctorCard extends StatelessWidget {
                 children: [
                   ClipRRect(
                     borderRadius: BorderRadius.circular(16),
-                    child: Image.asset(
-                      'assets/images/medica.png',
-                      width: 100,
-                      height: 100,
-                      fit: BoxFit.cover,
-                    ),
+                    child: professional.avatar != null
+                        ? Image.asset(
+                            'assets/images/medica.png',
+                            width: 100,
+                            height: 100,
+                            fit: BoxFit.cover,
+                          )
+                        : Container(
+                            width: 100,
+                            height: 100,
+                            color: Colors.black.withAlpha((255 * .1).toInt()),
+                            child: Icon(Icons.image),
+                          ),
                   ),
                   Expanded(
                     child: Column(

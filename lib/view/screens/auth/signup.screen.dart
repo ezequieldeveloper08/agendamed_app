@@ -28,6 +28,11 @@ class _SignupScreenState extends State<SignupScreen> {
               prefixIcon: Icons.person_outline,
             ),
             CustomTextField(
+              label: 'Telefone/Celular',
+              hintText: 'Insira seu número pra contato',
+              prefixIcon: Icons.phone_outlined,
+            ),
+            CustomTextField(
               label: 'Email',
               hintText: 'Insira seu email',
               prefixIcon: Icons.email_outlined,

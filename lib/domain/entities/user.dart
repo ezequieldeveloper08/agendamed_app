@@ -2,6 +2,9 @@ class User {
   String id;
   String name;
   String email;
+  String? avatar;
+  String? cellphone;
+  String? document;
   String dateOfBirth;
   String gender;
   String createdAt;
@@ -15,6 +18,9 @@ class User {
     required this.createdAt,
     required this.dateOfBirth,
     required this.updatedAt,
+    this.avatar,
+    this.cellphone,
+    this.document,
   });
 
   factory User.fromJson(Map<String, dynamic> json) {
@@ -26,6 +32,9 @@ class User {
       createdAt: json['createdAt'],
       dateOfBirth: json['dateOfBirth'],
       updatedAt: json['updatedAt'],
+      avatar: json['avatar'],
+      cellphone: json['cellphone'],
+      document: json['document'],
     );
   }
 
@@ -38,6 +47,9 @@ class User {
       'dateOfBirth': dateOfBirth,
       'createdAt': createdAt,
       'updatedAt': updatedAt,
+      'document': document,
+      'avatar': avatar,
+      'cellphone': cellphone,
     };
   }
 }

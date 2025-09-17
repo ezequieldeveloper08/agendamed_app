@@ -11,6 +11,9 @@ class Professional {
   List<OpeningHour> openingHours;
   Address address;
   List<ProfessionalCategory> categories;
+  String? avatar;
+  String? cellphone;
+  String? document;
 
   Professional({
     required this.address,
@@ -20,6 +23,9 @@ class Professional {
     required this.openingHours,
     required this.user,
     required this.categories,
+    this.avatar,
+    this.cellphone,
+    this.document,
   });
 
   factory Professional.fromJson(Map<String, dynamic> json) {
@@ -35,6 +41,9 @@ class Professional {
       categories: (json['categories'] as List)
           .map((item) => ProfessionalCategory.fromJson(item))
           .toList(),
+      avatar: json['avatar'],
+      cellphone: json['cellphone'],
+      document: json['document'],
     );
   }
 }

@@ -20,6 +20,7 @@ class AuthRepositoryImp implements AuthRepository {
       final accessToken = pref.getString('access_token');
 
       if (accessToken != null && userData != null) {
+        apiService.setToken(accessToken);
         return Result.ok({'user': User.fromJson(jsonDecode(userData))});
       } else {
         return Result.error(Exception('Usuário não está logado.'));
@@ -39,6 +40,7 @@ class AuthRepositoryImp implements AuthRepository {
 
       pref.setString('access_token', res.data['access_token']);
       pref.setString('user', jsonEncode(user.toJson()));
+      apiService.setToken(res.data['access_token']);
 
       return Result.ok(user);
     } on ServerException catch (error) {
