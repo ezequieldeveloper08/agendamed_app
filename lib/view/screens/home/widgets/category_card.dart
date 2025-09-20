@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:mediup/view/screens/search/search.screen.dart';
 
 class CategoryCard extends StatelessWidget {
   final String title;
@@ -12,26 +13,36 @@ class CategoryCard extends StatelessWidget {
       margin: EdgeInsets.zero,
       surfaceTintColor: Colors.white,
       color: Color(0xffF0F4FC),
-      child: Container(
-        padding: const EdgeInsets.all(4),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          spacing: 4,
-          children: [
-            SvgPicture.asset(
-              asset,
-              colorFilter: ColorFilter.mode(Color(0xff33384B), BlendMode.srcIn),
-            ),
-            Text(
-              title,
-              style: TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w600,
-                color: Color(0xff33384B),
+      clipBehavior: Clip.antiAlias,
+      child: InkWell(
+        onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => SearchScreen()),
+        ),
+        child: Container(
+          padding: const EdgeInsets.all(4),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            spacing: 4,
+            children: [
+              SvgPicture.asset(
+                asset,
+                colorFilter: ColorFilter.mode(
+                  Color(0xff33384B),
+                  BlendMode.srcIn,
+                ),
               ),
-            ),
-          ],
+              Text(
+                title,
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                  color: Color(0xff33384B),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

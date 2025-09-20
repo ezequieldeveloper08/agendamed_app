@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:mediup/view/screens/doctor/widgets/doctor_card.dart';
+import 'package:mediup/domain/entities/location.dart';
+import 'package:mediup/injection/app_injec.dart';
 import 'package:mediup/view/screens/places/widgets/place_h_card.dart';
+import 'package:mediup/view/screens/places/widgets/place_h_card_skeleton.dart';
+import 'package:mediup/view/view_models/location.view_model.dart';
 
 class PlaceScreen extends StatefulWidget {
   const PlaceScreen({super.key});
@@ -12,24 +15,25 @@ class PlaceScreen extends StatefulWidget {
 class _PlaceScreenState extends State<PlaceScreen> {
   final List<String> medicalSpecialties = [
     "Todos",
-    "Cardiologista",
-    "Dentista",
-    "Nefrologista",
-    "Gastroenterologista",
-    "Pneumologista",
-    "Neurologista",
-    "Psiquiatra",
-    "Hepatologista",
-    "Dermatologista",
-    "Oftalmologista",
-    "Ortopedista",
-    "Pediatra",
-    "Endocrinologista",
-    "Ginecologista",
-    "Urologista",
-    "Otorrinolaringologista",
+    "Hospital",
+    "Clínica",
+    "Laboratório",
+    "Consultório",
+    "Pronto-Socorro",
+    "Posto de Saúde",
+    "Centro de Diagnóstico",
+    "Unidade Básica de Saúde",
+    "Policlínica",
+    "Outro",
   ];
   String? selected = 'Todos';
+  final LocationViewModel viewModel = injec();
+
+  @override
+  void initState() {
+    super.initState();
+    viewModel.findAll.execute({});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -107,14 +111,34 @@ class _PlaceScreenState extends State<PlaceScreen> {
                 ),
               ),
             ),
-            SliverPadding(
-              padding: const EdgeInsets.all(20),
-              sliver: SliverList.separated(
-                itemBuilder: (context, index) => PlaceHCard(),
-                separatorBuilder: (context, index) =>
-                    const SizedBox(height: 16),
-                itemCount: 8,
-              ),
+            ListenableBuilder(
+              listenable: viewModel.findAll,
+              builder: (context, child) {
+                if (viewModel.findAll.running) {
+                  return SliverPadding(
+                    padding: const EdgeInsets.all(20),
+                    sliver: SliverList.separated(
+                      itemBuilder: (context, index) => PlaceHCardSkeleton(),
+                      separatorBuilder: (context, index) =>
+                          const SizedBox(height: 16),
+                      itemCount: 4,
+                    ),
+                  );
+                }
+
+                List<Location> locations = viewModel.locations;
+
+                return SliverPadding(
+                  padding: const EdgeInsets.all(20),
+                  sliver: SliverList.separated(
+                    itemBuilder: (context, index) =>
+                        PlaceHCard(location: locations[index]),
+                    separatorBuilder: (context, index) =>
+                        const SizedBox(height: 16),
+                    itemCount: locations.length,
+                  ),
+                );
+              },
             ),
           ],
         ),

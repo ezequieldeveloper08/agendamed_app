@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:mediup/domain/entities/location.dart';
 import 'package:mediup/view/screens/places/detail_place.screen.dart';
 
 class PlaceHCard extends StatelessWidget {
-  const PlaceHCard({super.key});
+  final Location location;
+  const PlaceHCard({super.key, required this.location});
 
   @override
   Widget build(BuildContext context) {
@@ -60,11 +62,11 @@ class PlaceHCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Hospital São Nicolau',
+                    location.name,
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
                   ),
                   Text(
-                    'Hospital em Catalão, Goiás',
+                    '${location.type.label} em ${location.address.city}, ${location.address.uf}',
                     style: TextStyle(
                       color: Colors.grey.shade600,
                       fontSize: 14,

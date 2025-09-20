@@ -1,10 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:mediup/domain/entities/location.dart';
+import 'package:mediup/injection/app_injec.dart';
 import 'package:mediup/view/screens/places/places.screen.dart';
 import 'package:mediup/view/screens/places/widgets/place_card.dart';
+import 'package:mediup/view/screens/places/widgets/place_card_skeleton.dart';
+import 'package:mediup/view/view_models/location.view_model.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 
-class ListPlacesNearYou extends StatelessWidget {
+class ListPlacesNearYou extends StatefulWidget {
   const ListPlacesNearYou({super.key});
+
+  @override
+  State<ListPlacesNearYou> createState() => _ListPlacesNearYouState();
+}
+
+class _ListPlacesNearYouState extends State<ListPlacesNearYou> {
+  final LocationViewModel viewModel = injec();
+
+  @override
+  void initState() {
+    super.initState();
+    viewModel.findAll.execute({});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,22 +63,51 @@ class ListPlacesNearYou extends StatelessWidget {
               ),
             ),
           ),
-          SliverToBoxAdapter(
-            child: SizedBox(
-              height: 248,
-              child: ListView.separated(
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) => Row(
-                  children: [
-                    if (index == 0) SizedBox(width: 20),
-                    PlaceCard(),
-                    if (index == 3) SizedBox(width: 20),
-                  ],
+          ListenableBuilder(
+            listenable: viewModel.findAll,
+            builder: (context, child) {
+              if (viewModel.findAll.running) {
+                return SliverToBoxAdapter(
+                  child: SizedBox(
+                    height: 248,
+                    child: ListView.separated(
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) => Row(
+                        children: [
+                          if (index == 0) SizedBox(width: 20),
+                          PlaceCardSkeleton(),
+                          if (index == 1) SizedBox(width: 20),
+                        ],
+                      ),
+                      separatorBuilder: (context, index) =>
+                          const SizedBox(width: 16),
+                      itemCount: 2,
+                    ),
+                  ),
+                );
+              }
+
+              List<Location> locations = viewModel.locations;
+
+              return SliverToBoxAdapter(
+                child: SizedBox(
+                  height: 248,
+                  child: ListView.separated(
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) => Row(
+                      children: [
+                        if (index == 0) SizedBox(width: 20),
+                        PlaceCard(location: locations[index]),
+                        if (index == 3) SizedBox(width: 20),
+                      ],
+                    ),
+                    separatorBuilder: (context, index) =>
+                        const SizedBox(width: 16),
+                    itemCount: locations.length,
+                  ),
                 ),
-                separatorBuilder: (context, index) => const SizedBox(width: 16),
-                itemCount: 4,
-              ),
-            ),
+              );
+            },
           ),
         ],
       ),
